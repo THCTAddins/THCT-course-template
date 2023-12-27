@@ -34,7 +34,7 @@ public class Bai_17 extends BasicTest {
 
         // Back click - Verify người dùng không chuyển đến quản lý tài khoản
         driver.navigate().back();
-        Assert.assertTrue(driver.findElement(By.xpath("//button[@name='save_account_details']")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.xpath("//button[@name='save_account_details']")).isDisplayed());
 
         
     }   
