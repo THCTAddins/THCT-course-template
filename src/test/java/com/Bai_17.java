@@ -19,7 +19,7 @@ public class Bai_17 extends BasicTest {
 
         // 'Tài khoản' hyperlink click
         // 'Thoát' hyperlink click
-        // Back click
+        // Back click - Verify người dùng không chuyển đến quản lý tài khoản
         
     }   
 
