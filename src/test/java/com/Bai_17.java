@@ -24,6 +24,10 @@ public class Bai_17 extends BasicTest {
         driver.findElement(By.id("password")).sendKeys("fto24137@omeie.com");
         driver.findElement(By.xpath("//button[@name='login']")).click();
 
+        //Back to homepage
+        driver.findElement(By.xpath("//a[contains(text(),'Trang chủ')]")).click();
+        driver.findElement(By.xpath("//a/strong")).click();
+
         // 'Tài khoản' hyperlink click
         driver.findElement(By.xpath("//a[contains(text(),'Tài khoản')]")).click();
         Assert.assertEquals(driver.getCurrentUrl(), "https://bantheme.xyz/hathanhauto/tai-khoan/edit-account/");
@@ -34,7 +38,7 @@ public class Bai_17 extends BasicTest {
 
         // Back click - Verify người dùng không chuyển đến quản lý tài khoản
         driver.navigate().back();
-        Assert.assertTrue(driver.findElement(By.xpath("//button[@name='save_account_details']")).isDisplayed());
+        Assert.assertFalse(driver.findElement(By.xpath("//button[@name='save_account_details']")).isDisplayed());
 
         
     }   
