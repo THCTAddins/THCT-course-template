@@ -22,8 +22,9 @@ public abstract class BasicTest {
     // private String driverPath;
 
     @BeforeSuite
-    public void beforeSuite() throws Exception{
-        excel = new ExcelUtils("src\\test\\resources\\", "test_data.xlsx");
+    @Parameters({"xlsxPath", "xlsxName"})
+    public void beforeSuite(String xlpath, String xlname) throws Exception{
+        excel = new ExcelUtils(xlpath, xlname);
     }
 
     @BeforeMethod
@@ -70,7 +71,8 @@ public abstract class BasicTest {
     }
 
     @AfterSuite
-    public void afterSuite() throws Exception{
-        excel.saveData("src\\test\\resources\\", "test_data.xlsx");
+    @Parameters({"xlsxPath", "xlsxName"})
+    public void afterSuite(String xlpath, String xlname) throws Exception{
+        excel.saveData(xlpath, xlname);
     }
 }
