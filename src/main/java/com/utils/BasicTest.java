@@ -5,7 +5,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 
@@ -16,11 +18,17 @@ public abstract class BasicTest {
     
     public static final Logger logger = LogManager.getLogger();
     protected static WebDriver driver;
+    protected static ExcelUtils excel;
     // private String driverPath;
+
+    @BeforeSuite
+    public void beforeSuite() throws Exception{
+        excel = new ExcelUtils("src\\test\\resources\\", "test_data.xlsx");
+    }
 
     @BeforeMethod
     @Parameters({"baseURL"})
-    public void preCondition(String webURL) {
+    public void preCondition(String webURL) throws Exception{
         // Chromedriver path
         // driverPath = "src/main/resources/WebDrivers/chromedriver.exe";
         // ChromeOptions options = new ChromeOptions();
@@ -32,24 +40,25 @@ public abstract class BasicTest {
         driver.manage().window().maximize();
         String url = webURL;
         driver.get(url);
-        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @DataProvider(name="testLogin")
-    public Object[][] TestDataFeed(){
+    public Object[][] TestDataFeed() throws Exception{
         //Create object array with 2 row & 2 col - 1st parameter is row, 2nd is col
-        Object [][] logindata = new Object[3][2];
+        ExcelUtils excel = new ExcelUtils("src\\test\\resources\\", "test_data.xlsx");
+        int noOfRows = excel.getRowCount(0)-1;
+        System.out.println("No of Rows:" + noOfRows);
+
+        Object [][] logindata = new Object[noOfRows][2];
 
         //Data
-        logindata[0][0] = "admin";
-        logindata[0][1] = "admin";
-
-        logindata[1][0] = "manager";
-        logindata[1][1] = "demouserpwd";
-
-        logindata[2][0] = "user1";
-        logindata[2][1] = "demouserpwd";
-
+        for (int i=1;i<=noOfRows;i++) {
+            System.out.println("Current row:" + i);
+            logindata[i-1][0] = excel.getData(0,i,0);
+            System.out.println("Username:" + logindata[i-1][0]);
+            logindata[i-1][1] = excel.getData(0,i,1);
+            System.out.println("Password:" + logindata[i-1][1]);
+        }
         //return arrayobject to @Test
         return logindata;
     }
@@ -58,5 +67,10 @@ public abstract class BasicTest {
     public void postCondition(){
         // Quit the Browser
         driver.quit();
+    }
+
+    @AfterSuite
+    public void afterSuite() throws Exception{
+        excel.saveData("src\\test\\resources\\", "test_data.xlsx");
     }
 }
