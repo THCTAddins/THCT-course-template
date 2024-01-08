@@ -45,20 +45,21 @@ public abstract class BasicTest {
 
     @DataProvider(name="testLogin")
     public Object[][] TestDataFeed() throws Exception{
-        //Create object array with 2 row & 2 col - 1st parameter is row, 2nd is col
+        //Create object array with n row & 3 col - 1st parameter is row, 2nd is col
         ExcelUtils excel = new ExcelUtils("src\\test\\resources\\", "test_data.xlsx");
         int noOfRows = excel.getRowCount(0)-1;
         System.out.println("No of Rows:" + noOfRows);
 
-        Object [][] logindata = new Object[noOfRows][2];
+        Object [][] logindata = new Object[noOfRows][3];
 
         //Data
         for (int i=1;i<=noOfRows;i++) {
-            System.out.println("Current row:" + i);
-            logindata[i-1][0] = excel.getData(0,i,0);
-            System.out.println("Username:" + logindata[i-1][0]);
+            logindata[i-1][0] = excel.getData(0, i, 0);
+            System.out.println("ID:" + i);
             logindata[i-1][1] = excel.getData(0,i,1);
-            System.out.println("Password:" + logindata[i-1][1]);
+            System.out.println("Username:" + logindata[i-1][1]);
+            logindata[i-1][2] = excel.getData(0,i,2);
+            System.out.println("Password:" + logindata[i-1][2]);
         }
         //return arrayobject to @Test
         return logindata;

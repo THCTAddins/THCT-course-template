@@ -33,6 +33,9 @@ public class ExcelUtils{
     public String getData(int sheetnumber, int row, int column) throws Exception {
         sheet = work_book.getSheetAt(sheetnumber);
         cell = sheet.getRow(row).getCell(column);
+        if (cell == null) {
+                cell = sheet.getRow(row).createCell(column);
+            }
         return cell.getStringCellValue();
     }
 
@@ -56,7 +59,7 @@ public class ExcelUtils{
     public void setCellData(String result, int sheetnumber, String tcID, int column) throws Exception{
         try{
             int row = getRowByTCID(sheetnumber, tcID);
-            System.out.println("Testing row: " + row);
+            System.out.println("Testing ID: " + tcID);
             sheet = work_book.getSheetAt(sheetnumber);
             cell = sheet.getRow(row).getCell(column);
             if (cell == null) {
