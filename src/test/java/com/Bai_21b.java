@@ -1,5 +1,7 @@
 package com;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,50 +11,78 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.utils.BasicTest;
-import com.utils.Utils;
 
 public class Bai_21b extends BasicTest {
     
     @Test()//dataProvider = "testLogin")
-    public void loginTest() {      
-        //  Login
-        
-        WaitFindElementWithXpath("//a[contains(@title,\"Mercedes SLK200, SLK300, GLK200, E260, C350-2742000207\")]").click();
-        WaitFindElementWithXpath("//*[@value=\"england\"]");
-        new Select(WaitFindElementWithId("pa_xuat-xu")).selectByValue("england");
-        WaitFindElementWithXpath("//button[@class='single_add_to_cart_button button alt']").click();
-        WaitFindElementWithId("logo").click();
+    public void AddProduct() {
+        //  Product info
+            //Array length
+            String[] prdName = new String[2];
+            String[] prdCheckoutName = new String[2];
+            String[] prdVariable = new String[2];
+            int[] prdPrice = new int[2];
+            int[] prdNumber = new int[2];
 
-        WaitFindElementWithXpath("//a[contains(@title,\"Lốc lạnh (máy nén) xe Mercedes E CLass, GLK Class, SLK Class\")]").click();
+            //Product 1
+            prdName[0] = "Bơm nước xe Mercedes SLK200, SLK300, GLK200, E260, C350-2742000207";
+            prdCheckoutName[0] = "Bơm nước xe Mercedes SLK200, SLK300, GLK200, E260, C350-2742000207 - England";
+            prdVariable[0] = "england";
+            prdPrice[0] = 320000;
+            prdNumber[0] = 1;
+
+            //Product 2
+            prdName[1] = "Lốc lạnh (máy nén) xe Mercedes E CLass, GLK Class, SLK Class";
+            prdCheckoutName[1] = "Lốc lạnh (máy nén) xe Mercedes E CLass, GLK Class, SLK Class";
+            prdPrice[1] = 12500000;
+            prdNumber[1] = 2;
+        
+        //  Add Product to cart
+        //  Product 1
+        WaitFindElementWithXpath("//a[contains(@title,'"+prdName[0]+"')]").click();
+        WaitFindElementWithXpath("//option");
+        new Select(WaitFindElementWithId("pa_xuat-xu")).selectByValue(prdVariable[0]);
+        WaitFindElementWithXpath("//button[@class='single_add_to_cart_button button alt']").click();
+        //  Back to homepage
+        WaitFindElementWithId("logo").click();
+        //  Product 2
+        WaitFindElementWithXpath("//a[contains(@title,'"+prdName[1]+"')]").click();
         WaitFindElementWithXpath("//button[@class=\"plus\"]").click();
         WaitFindElementWithXpath("//button[@class='single_add_to_cart_button button alt']").click();
 
-        Assert.assertTrue(WaitFindElementWithXpath("//a[contains(@title,\"Giỏ hàng của bạn\")]/b").getText().equals("3"));
+        // Count & assert
+        int sumOfProducts = 0;
+        int noOfProducts = 0;
 
-        Assert.assertTrue(WaitFindElementWithXpath("//*/tbody/tr[1]/td[3]").getText().contains("Bơm nước xe Mercedes SLK200, SLK300, GLK200, E260, C350-2742000207 - England"));
-        Assert.assertTrue(WaitFindElementWithXpath("//*/tbody/tr[1]/td[4]").getText().contains("320,000"));
-        Assert.assertTrue(WaitFindElementWithXpath("//*/tbody/tr[1]/td[5]/div/input").getAttribute("value").equals("1"));
-        Assert.assertTrue(WaitFindElementWithXpath("//*/tbody/tr[1]/td[6]").getText().contains(String.format("%,d",320000*1)));
+        List<WebElement> products = driver.findElements(By.xpath("//table[@class=\"shop_table shop_table_responsive cart woocommerce-cart-form__contents\"]/tbody/tr[contains(@class, 'cart_item')]"));
+        for (int i=0; i < products.size(); i++) {
+            //  Assert Products
+            Assert.assertTrue(products.get(i).findElement(By.xpath(".//td[3]")).getText().contains(prdCheckoutName[i]));
+            Assert.assertTrue(products.get(i).findElement(By.xpath(".//td[4]")).getText().contains(String.format("%,d",(prdPrice[i]))));
+            Assert.assertTrue(products.get(i).findElement(By.xpath(".//td[5]/div/input")).getAttribute("value").equals(String.valueOf(prdNumber[i])));
+            Assert.assertTrue(products.get(i).findElement(By.xpath(".//td[6]")).getText().contains(String.format("%,d",(prdPrice[i]*prdNumber[i]))));
+            //  Save products number and total price
+            noOfProducts += Integer.valueOf(products.get(i).findElement(By.xpath(".//input[@type=\"number\"]")).getAttribute("value"));
+            sumOfProducts += Integer.valueOf(prdPrice[i]*prdNumber[i]);
 
-        Assert.assertTrue(WaitFindElementWithXpath("//*/tbody/tr[2]/td[3]").getText().contains("Lốc lạnh (máy nén) xe Mercedes E CLass, GLK Class, SLK Class"));
-        Assert.assertTrue(WaitFindElementWithXpath("//*/tbody/tr[2]/td[4]").getText().contains("12,500,000"));
-        Assert.assertTrue(WaitFindElementWithXpath("//*/tbody/tr[2]/td[5]/div/input").getAttribute("value").equals("2"));
-        Assert.assertTrue(WaitFindElementWithXpath("//*/tbody/tr[2]/td[6]").getText().contains(String.format("%,d",12500000*2)));
+        }
 
-        Assert.assertTrue(WaitFindElementWithXpath("//tr[@class=\"cart-subtotal\"]/td/span/bdi").getText().contains(String.format("%,d",12500000*2+320000)));
-        Assert.assertTrue(WaitFindElementWithXpath("//tr[@class=\"order-total\"]/td/strong/span/bdi").getText().contains(String.format("%,d",12500000*2+320000)));
+        //  Assert product number
+        Assert.assertTrue(WaitFindElementWithXpath("//a[contains(@title,\"Giỏ hàng của bạn\")]/b").getText().equals(String.valueOf(noOfProducts)));
 
+        //  Assert Total Table
+        Assert.assertTrue(WaitFindElementWithXpath("//tr[@class=\"cart-subtotal\"]/td").getText().contains(String.format("%,d",sumOfProducts)));
+        Assert.assertTrue(WaitFindElementWithXpath("//tr[@class=\"order-total\"]/td").getText().contains(String.format("%,d",sumOfProducts)));
 
-        Utils.hardWait();
     }
 
     public WebElement WaitFindElementWithId(String id) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        return wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+        return wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
     }
 
     public WebElement WaitFindElementWithXpath(String xpath) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        return wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+        return wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
     }
 }
