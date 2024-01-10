@@ -3,11 +3,11 @@
 <suite thread-count="1" parallel="tests" name="DemoSuite">
     <parameter name="xlsxPath" value="src\\test\\resources\\"/>
     <parameter name="xlsxName" value="test_data.xlsx"/>
-    <parameter name="baseURL" value="https://icehrm-open.gamonoid.com/login.php"/>
+    <parameter name="baseURL" value="https://bantheme.xyz/hathanhauto/"/>
     <test thread-count="1" parallel="classes" name="DemoTest">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="com.Bai_20" />
+            <class name="com.Bai_21" />
         </classes>
     </test>
 </suite> <!-- Suite -->
