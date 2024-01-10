@@ -71,9 +71,9 @@ public abstract class BasicTest {
         driver.quit();
     }
 
-    @AfterSuite
-    @Parameters({"xlsxPath", "xlsxName"})
-    public void afterSuite(String xlpath, String xlname) throws Exception{
-        excel.saveData(xlpath, xlname);
-    }
+    // @AfterSuite
+    // @Parameters({"xlsxPath", "xlsxName"})
+    // public void afterSuite(String xlpath, String xlname) throws Exception{
+    //     excel.saveData(xlpath, xlname);
+    // }
 }
