@@ -10,16 +10,15 @@ import org.testng.annotations.Test;
 import com.utils.BasicTest;
 
 public class Bai_20 extends BasicTest {
-    private WebDriverWait wait = new WebDriverWait(driver, 10);
-
+    
     @Test(dataProvider = "testLogin")
     public void loginTest(String tcID, String uname, String pwd) throws Exception {      
         //  Login
         try{
-            FindWaitElementWithXpath("username").clear();
-            FindWaitElementWithXpath("username").sendKeys(uname);
-            FindWaitElementWithXpath("password").clear();
-            FindWaitElementWithXpath("password").sendKeys(pwd);
+            FindWaitElementWithId("username").clear();
+            FindWaitElementWithId("username").sendKeys(uname);
+            FindWaitElementWithId("password").clear();
+            FindWaitElementWithId("password").sendKeys(pwd);
             FindWaitElementWithXpath("//button[contains(text(),\"Log in\")]").click();
             WebElement loggedin = FindWaitElementWithXpath("//a[contains(text(),\"Logged\")]");
             
@@ -30,13 +29,20 @@ public class Bai_20 extends BasicTest {
         }
             catch(Exception e) {
                 excel.setCellData(e.getMessage(), 0, tcID, 3);
-                Assert.assertTrue(FindWaitElementWithXpath("//a[contains(text(),\"Logged\")]").isDisplayed());
+                Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),\"Logged\")]")).isDisplayed());
         }
     }
 
-    public WebElement FindWaitElementWithXpath(String xpath) {
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(xpath)));
+    public WebElement FindWaitElementWithId(String id) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
         return element;
-    }   
+    }
+
+    public WebElement FindWaitElementWithXpath(String xpath) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        return element;
+    }     
 
 }
