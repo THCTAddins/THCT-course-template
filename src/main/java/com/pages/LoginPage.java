@@ -14,7 +14,7 @@ public class LoginPage extends BasePage{
     @FindBy(id = "UserLogin")
     public WebElement tk;
 
-   @FindBy(xpath = "//ul[contains(@class, 'dropdown-menu')]//btn[text() = 'Đăng nhập']")
+    @FindBy(xpath = "//ul[contains(@class, 'dropdown-menu')]//btn[text() = 'Đăng nhập']")
     public WebElement dn;
     
     @FindBy(xpath = "//input[@name='EmailPhoneDN']")
