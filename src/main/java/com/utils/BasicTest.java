@@ -19,11 +19,16 @@ public abstract class BasicTest {
     public static final Logger logger = LogManager.getLogger();
     protected static WebDriver driver;
     protected static ExcelUtils excel;
+    private String xlpath;
+    private String xlname;
+
     // private String driverPath;
 
     @BeforeSuite
     @Parameters({"xlsxPath", "xlsxName"})
-    public void beforeSuite(String xlpath, String xlname) throws Exception{
+    public void beforeSuite(String pathIn, String nameIn) throws Exception{
+        xlpath = pathIn;
+        xlname = nameIn;
         excel = new ExcelUtils(xlpath, xlname);
     }
 
@@ -46,7 +51,7 @@ public abstract class BasicTest {
     @DataProvider(name="testLogin")
     public Object[][] TestDataFeed() throws Exception{
         //Create object array with n row & 3 col - 1st parameter is row, 2nd is col
-        ExcelUtils excel = new ExcelUtils("src\\test\\resources\\", "test_data.xlsx");
+        //ExcelUtils excel = new ExcelUtils("src\\test\\resources\\", "test_data.xlsx");
         int noOfRows = excel.getRowCount(0)-1;
         System.out.println("No of Rows:" + noOfRows);
 
@@ -72,8 +77,7 @@ public abstract class BasicTest {
     }
 
     @AfterSuite
-    @Parameters({"xlsxPath", "xlsxName"})
-    public void afterSuite(String xlpath, String xlname) throws Exception{
+    public void afterSuite() throws Exception{
         excel.saveData(xlpath, xlname);
     }
 }
