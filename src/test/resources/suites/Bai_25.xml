@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3" parallel="tests" name="DemoSuite">
+    <parameter name="xlsxPath" value="src\\test\\resources\\"/>
+    <parameter name="xlsxName" value="test_data.xlsx"/>
+    <test thread-count="1" parallel="classes" name="DemoTest1">
+        <parameter name="baseURL" value="https://bantheme.xyz/hathanhauto/"/>
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.Bai_21" />
+        </classes>
+    </test>
+    <test thread-count="1" parallel="classes" name="DemoTest2">
+        <parameter name="baseURL" value="https://bantheme.xyz/hathanhauto/"/>
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.Bai_21b" />
+        </classes>
+    </test>
+    <test thread-count="1" parallel="classes" name="DemoTest3">
+        <parameter name="baseURL" value="https://www.ivivu.com/"/>
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.Bai_23" />
+        </classes>
+    </test>
+</suite> <!-- Suite -->

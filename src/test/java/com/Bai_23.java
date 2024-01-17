@@ -2,17 +2,26 @@ package com;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.pages.LoginPage;
 import com.utils.BasicTest;
+import com.utils.DriverManager;
 
 public class Bai_23 extends BasicTest {
 
+    @Parameters({"baseURL"})
     @Test()
-    public void loginTest() {      
+    public void loginTest(String webURL) {      
+
+        WebDriver driver = DriverManager.getDriver();
+        String url = webURL;
+        driver.get(url);
+
         //  Login lfl26900@zslsz.com
         String uname = "lfl26900@zslsz.com";
         String pwd = "lfl26900@zslsz.com";
@@ -34,7 +43,7 @@ public class Bai_23 extends BasicTest {
     }
 
     public String getHtml5ValidationMessage(WebElement element) {
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) DriverManager.getDriver();
         return (String) jsExecutor.executeScript("return arguments[0].validationMessage;", element);
     }
 
