@@ -51,5 +51,6 @@ public class WebAppSteps {
     @Then("verify login success")
     public void verify_login_success() {
         Assert.assertTrue(driver.findElement(By.xpath("//*[contains(text(),'Đăng xuất')]")).isEnabled());
+        driver.quit();
     }
 }
