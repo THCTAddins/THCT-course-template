@@ -67,9 +67,9 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <suiteXmlFiles>
+                    <!-- <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/suites/${suite}.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+                    </suiteXmlFiles> -->
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -83,7 +83,7 @@
     </build>
     <dependencies>
 
-        <!-- <dependency>
+        <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>7.15.0</version>
@@ -93,7 +93,7 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>7.15.0</version>
-        </dependency> -->
+        </dependency>
         
         <dependency>
             <groupId>io.appium</groupId>
