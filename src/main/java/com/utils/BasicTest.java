@@ -1,12 +1,7 @@
 package com.utils;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import java.net.URL;
-import java.util.HashMap;
-
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterMethod;
@@ -31,16 +26,16 @@ public abstract class BasicTest {
     // @Parameters({"baseURL"})
     public void preCondition() throws Exception{
 
-        //Remote
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("browserName", "Chrome");
-        capabilities.setCapability("browserVersion", "121.0");
-        HashMap<String, Object> ltOptions = new HashMap<String, Object>();
-        ltOptions.put("username", "jateb46958");
-        ltOptions.put("accessKey", "PC2TKN3gpgIcdbx36YJNz9I0bW8L46Pm9CMJEAY4V7Ob9FHKQ2");
-        ltOptions.put("platformName", "Windows 10");
-        ltOptions.put("project", "Untitled");
-        capabilities.setCapability("LT:Options", ltOptions);
+        // //Remote
+        // DesiredCapabilities capabilities = new DesiredCapabilities();
+        // capabilities.setCapability("browserName", "Chrome");
+        // capabilities.setCapability("browserVersion", "121.0");
+        // HashMap<String, Object> ltOptions = new HashMap<String, Object>();
+        // ltOptions.put("username", "jateb46958");
+        // ltOptions.put("accessKey", "PC2TKN3gpgIcdbx36YJNz9I0bW8L46Pm9CMJEAY4V7Ob9FHKQ2");
+        // ltOptions.put("platformName", "Windows 10");
+        // ltOptions.put("project", "Untitled");
+        // capabilities.setCapability("LT:Options", ltOptions);
 
         // Chromedriver path
         // driverPath = "src/main/resources/WebDrivers/chromedriver.exe";
@@ -48,8 +43,8 @@ public abstract class BasicTest {
         // System.setProperty("webdriver.chrome.driver", driverPath);
         // driver = new ChromeDriver(options);
         WebDriverManager.chromedriver().setup();
-        //driver_org = new ChromeDriver();
-        driver_org = new RemoteWebDriver(new URL("https://hub.lambdatest.com/wd/hub"), capabilities);
+        driver_org = new ChromeDriver();
+        // driver_org = new RemoteWebDriver(new URL("https://hub.lambdatest.com/wd/hub"), capabilities);
 
         DriverManager.setDriver(driver_org);
         
