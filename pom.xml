@@ -83,19 +83,17 @@
     </build>
     <dependencies>
 
-        <dependency>
+        <!-- <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>7.15.0</version>
-            <!-- <scope>test</scope> -->
         </dependency>
 
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>1.2.6</version>
-<!--            <scope>test</scope>-->
-        </dependency>
+            <version>7.15.0</version>
+        </dependency> -->
         
         <dependency>
             <groupId>io.appium</groupId>
