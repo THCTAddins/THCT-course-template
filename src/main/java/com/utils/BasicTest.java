@@ -2,6 +2,7 @@ package com.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterMethod;
@@ -41,11 +42,14 @@ public abstract class BasicTest {
 
         // Chromedriver path
         // driverPath = "src/main/resources/WebDrivers/chromedriver.exe";
-        // ChromeOptions options = new ChromeOptions();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("window-size=1920,1080");
+        options.addArguments("--no-sanbox");
         // System.setProperty("webdriver.chrome.driver", driverPath);
-        // driver = new ChromeDriver(options);
         WebDriverManager.chromedriver().setup();
-        driver_org = new ChromeDriver();
+        driver_org = new ChromeDriver(options);
+        // driver_org = new ChromeDriver();
         // driver_org = new RemoteWebDriver(new URL("https://hub.lambdatest.com/wd/hub"), capabilities);
 
         DriverManager.setDriver(driver_org);

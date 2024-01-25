@@ -14,12 +14,12 @@ import com.utils.DriverManager;
 
 public class Bai_23 extends BasicTest {
 
-    @Parameters({"baseURL"})
+    // @Parameters({"baseURL"})
     @Test()
-    public void loginTest(String webURL) {      
+    public void loginTest(){//String webURL) {      
 
         WebDriver driver = DriverManager.getDriver();
-        String url = webURL;
+        String url = "https://www.ivivu.com/";
         driver.get(url);
 
         //  Login lfl26900@zslsz.com
