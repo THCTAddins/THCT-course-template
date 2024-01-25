@@ -3,6 +3,7 @@ package com.steps;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 
 import com.pages.LoginPage;
@@ -16,8 +17,12 @@ public class WebAppSteps {
 
     @Given("browser is opened")
     public void browser_is_opened(){
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("window-size=1920,1080");
+        options.addArguments("--no-sanbox");
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         String url = "https://www.ivivu.com/";
         driver.get(url);

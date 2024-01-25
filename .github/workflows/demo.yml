@@ -32,12 +32,18 @@ jobs:
         run:  |
           mvn clean test -Dtest=${{ github.event.inputs.test_name }} -DfailIfNoTests=false
 
-      - name: Report
+      - name: Report Cucumber
         uses: actions/upload-artifact@v3
+        if: ${{ contains(github.event.inputs.test_name, 'Cucumber') }}
         with:
           name: test-report-${{ github.run_number }}
           path: |
-            if: ${{ contains(github.event.inputs.test_name, 'Cucumber') }}
             target/cucumber-reports/cucumber.html
-            if: ${{ ! contains(github.event.inputs.test_name, 'Cucumber') }}
+      
+      - name: Report TestNG
+        uses: actions/upload-artifact@v3      
+        if: ${{ ! contains(github.event.inputs.test_name, 'Cucumber') }}
+        with:
+          name: test-report-${{ github.run_number }}
+          path: |
             target/surefire-reports/emailable-report.html
