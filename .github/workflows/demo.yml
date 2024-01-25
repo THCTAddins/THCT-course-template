@@ -31,3 +31,13 @@ jobs:
       - name: CI test
         run:  |
           mvn clean test -Dtest=${{ github.event.inputs.test_name }} -DfailIfNoTests=false
+
+      - name: Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report-${{ github.run_number }}
+          path: |
+            if: ${{ contains(github.event.inputs.test_name, 'Cucumber') }}
+            target/cucumber-reports/cucumber.html
+            if: ${{ ! contains(github.event.inputs.test_name, 'Cucumber') }}
+            target/surefire-reports/emailable-report.html
