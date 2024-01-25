@@ -17,10 +17,10 @@ jobs:
         run: sudo apt-get install -y maven
 
       - name: Install Chrome
-        run:  
+        run:  |
           sudo apt-get update
           sudo apt-get --only-upgrade install google-chrome-stable
 
       - name: CI test
-        run:
+        run:  |
           mvn clean test -Dtest=com.Bai_23 -DfailIfNoTests=false
