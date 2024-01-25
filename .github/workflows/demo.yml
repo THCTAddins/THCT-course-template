@@ -1,6 +1,13 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      test_name:
+        description: 'Test case name'
+        required: true
+        default: 'com.Bai_23'
+  # [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -23,4 +30,4 @@ jobs:
 
       - name: CI test
         run:  |
-          mvn clean test -Dtest=com.Bai_23 -DfailIfNoTests=false
+          mvn clean test -Dtest=${{ github.event.inputs.test_name }} -DfailIfNoTests=false
