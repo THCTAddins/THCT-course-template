@@ -19,7 +19,7 @@ jobs:
       - name: Install Chrome
         run:  
           sudo apt-get update
-          suto apt-get --only-upgrade install google-chrome-stable
+          sudo apt-get --only-upgrade install google-chrome-stable
 
       - name: CI test
         run:
